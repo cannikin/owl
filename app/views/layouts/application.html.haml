@@ -1,0 +1,18 @@
+!!! DOCTYPE
+
+%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en", :lang =>"en"}
+  %head
+    %meta{'http-equiv' => "content-type", :content => "text/html;charset=UTF-8"}
+    %title
+      = @page_title || "#{controller.controller_name} : #{controller.action_name}"
+      | Owl
+    = stylesheet_link_tag 'reset-fonts','shared', :media => 'all'#, :cache => true
+    = javascript_include_tag 'prototype','effects','application'
+    = yield :head  # if you want to add any other code to the head, add it via `content_for :head do` in any view and it'll end up here
+      
+  %body{:id => controller.controller_name}
+    %h1= link_to '<span>Owl</span>', root_path
+    
+    = yield
+    = yield :body
+    
