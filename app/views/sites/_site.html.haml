@@ -1,0 +1,5 @@
+%div[site]{:onclick => "location.href='#{site_path(site)}'"}
+  .container
+    %h2= site.name
+    %table
+      = render :partial => 'watches/watch', :collection => site.watches

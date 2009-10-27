@@ -5,3 +5,7 @@
 #   
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
+Status.create( { :name => 'Up' } )
+                #{ :name => 'Down', :class => 'down' }, 
+                #{ :name => 'Disabled', :class => 'disabled' }, 
+                #{ :name => 'Unknown', :class => 'unknown' } ])

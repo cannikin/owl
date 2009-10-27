@@ -1,0 +1,7 @@
+%tr[watch]{:class => watch.status.css }
+  %td.name= watch.name
+  - if watch.url.length > 50
+    %td.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
+  - else
+    %td.url= link_to(watch.url, watch.url)
+  %td.status= watch.status.name

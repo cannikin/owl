@@ -1,0 +1,24 @@
+<h1>Listing watches</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Site</th>
+  </tr>
+
+<% @watches.each do |watch| %>
+  <tr>
+    <td><%=h watch.name %></td>
+    <td><%=h watch.url %></td>
+    <td><%=h watch.site.name %></td>
+    <td><%= link_to 'Show', watch %></td>
+    <td><%= link_to 'Edit', edit_watch_path(watch) %></td>
+    <td><%= link_to 'Destroy', watch, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New watch', new_watch_path %>

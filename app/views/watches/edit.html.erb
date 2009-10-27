@@ -1,0 +1,24 @@
+<h1>Editing watch</h1>
+
+<% form_for(@watch) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :site_id %><br />
+    <%= f.select :site_id, Site.all.map { |s| [s.name,s.id] } %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @watch %> |
+<%= link_to 'Back', watches_path %>
