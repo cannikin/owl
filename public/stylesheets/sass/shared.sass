@@ -1,13 +1,13 @@
 html
-  background-color: #000000
+  background-color: #e6e1c7
   color: #333333
   
 h1
   margin: 1em 0 0
   a
     display: block
-    width: 163px
-    height: 100px
+    width: 211px
+    height: 110px
     background: transparent url('../images/logo.png') top left no-repeat
     span
       display: none
@@ -16,50 +16,122 @@ h1
   margin: 1em 5em
   .site
     width: 100%
-    background-color: #cccccc
-    -moz-border-radius: 15px
-    margin: 1em 0
+    background-color: #5e3500
+    -moz-border-radius: 8px
+    margin: 2em 0 1em
     cursor: pointer
     &:hover
-      background-color: #d3d3d3
+      / background-color: #999999
     .container
-      padding: 1em 2em
+      padding: 1em 1.5em 1.5em
       h2
-        font-size: 161%
+        font-size: 200%
         font-weight: bold
-        margin: 0 0 .2em
+        margin: 0 0 .4em
+        color: #ffffff
+        text-shadow: 2px 2px 2px rgba(0,0,0,.6)
       table
-        font-size: 131%
         color: #666666
         -moz-border-radius: 10px
         background-color: #eeeeee
         width: 100%
+        tr:first-child td:first-child
+          -moz-border-radius: 5px 0 0 0
+        tr:first-child td:last-child
+          -moz-border-radius: 0 5px 0 0
+        tr:last-child td:first-child
+          -moz-border-radius: 0 0 0 5px
+        tr:last-child td:last-child
+          -moz-border-radius: 0 0 5px 0
         tr:last-child td
           border-bottom: none
         td
-          padding: .2em 1em
-          border-bottom: 1px solid #aaaaaa
+          padding: .5em 1em
+          border-bottom: 5px solid #5e3500
+          span
+            display: block
           &.name
-            width: 15%
-          &.url
-            width: 35%
-            font-size: 85%
+            width: auto
+            span.name
+              font-size: 146.5%
+              text-shadow: 1px 1px 2px rgba(0,0,0,.6)
+            span.url
+              font-size: 100%
+            a
+              color: rgba(255,255,255,.6)
+              &:hover
+                color: rgba(255,255,255,1)
           &.status
-            width: 50%
-            font-weight: bold
+            width: 50px
+            text-align: center
+            span.status
+              font-weight: bold
+              font-size: 146.5%
+              text-shadow: 1px 1px 2px rgba(0,0,0,.6)
+            span.response
+              font-size: 85%
+            a
+              color: #ffffff
+          &.graph
+            width: 235px
+            text-align: right
+            img
+              display: block
+              padding: .3em
+              background-color: #ffffff
+              -moz-border-radius: 5px
         // statuses
         tr.up
           td
-            background-color: #e6ffe6
-          td.status
-            color: #009900
+            background-color: #638562
+            color: #ffffff
+          &:hover
+            td
+              background-color: #7A9F78
         tr.down
           td
-            background-color: #f9dbdb
-          td.status
-            color: #990000
+            background-color: #921C1C
+            color: #ffffff
+          &:hover
+            td
+              background-color: #AE2D2D
         tr.disabled
           td
-            color: #aaaaaa
+            background-color: #aaaaaa
+            color: #ffffff
+          &:hover
+            td
+              background-color: #999999
         tr.unknown
+      
+      .new_watch
+        font-size: 108%
+        background-color: #009900
+        margin: 0.5em 0 0
+        float: right
+        -moz-border-radius: 5px
+        -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3)
+        &:hover
+          background-color: #04b502
+        a
+          color: #ffffff
+          text-decoration: none
+          display: block
+          padding: 0.3em 1.5em
+          text-shadow: 1px 1px 1px rgba(0,0,0,.6)
+        
+  #add_site
+    margin: 2em 0 0
+    h2
+      -moz-border-radius: 10px
+      text-shadow: 2px 2px 2px rgba(0,0,0,.6)
+      background-color: #009900
+      font-size: 200%
+      &:hover
+        background-color: #04b502
+      a
+        color: #ffffff
+        text-decoration: none
+        display: block
+        padding: 0.5em 1em
         

@@ -3,7 +3,8 @@ class CreateWatches < ActiveRecord::Migration
     create_table :watches do |t|
       t.string :name
       t.string :url
-      t.integer :status_id
+      t.integer :last_response_time
+      t.integer :status_id, :default => Status::DISABLED
       t.integer :site_id
       
       t.timestamps

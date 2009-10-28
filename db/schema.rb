@@ -25,7 +25,8 @@ ActiveRecord::Schema.define(:version => 20091027232114) do
   create_table "watches", :force => true do |t|
     t.string   "name"
     t.string   "url"
-    t.integer  "status_id"
+    t.integer  "last_response_time"
+    t.integer  "status_id",          :default => 3
     t.integer  "site_id"
     t.datetime "created_at"
     t.datetime "updated_at"

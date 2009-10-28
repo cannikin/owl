@@ -1,3 +1,5 @@
 #sites
   = render :partial => 'sites/site', :collection => @sites
   
+  #add_site
+    %h2= link_to '+ Add New Site', new_site_path

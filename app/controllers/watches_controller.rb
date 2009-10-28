@@ -1,3 +1,5 @@
+require 'lib/spark_pr.rb'
+
 class WatchesController < ApplicationController
   # GET /watches
   # GET /watches.xml
@@ -82,4 +84,17 @@ class WatchesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  
+  # returns the response time graph for a given watch
+  def response_graph
+    points = []
+    24.times do |num|
+      points << rand(100) + 1
+    end
+    logger.debug("Points: #{points.inspect}")
+    png = Spark.plot(points, :type => 'smooth', :has_min => true, :has_max => true, 'has_last' => 'true', 'height' => '40', :step => 10, :normalize => 'logarithmic' ) 
+    send_data png, :type => 'image/png', :disposition => 'inline'
+  end
+  
 end

@@ -4,6 +4,7 @@ one:
   id: 1
   name: Homepage
   url: http://ihoops.com/
+  last_response_time: 124
   status_id: 1
   site_id: 1
 
@@ -11,6 +12,7 @@ two:
   id: 2
   name: Homepage
   url: http://sportsstudiocasting.com
+  last_response_time: 243
   status_id: 1
   site_id: 2
   
@@ -18,5 +20,6 @@ three:
   id: 3
   name: Login
   url: http://sportsstudiocasting.com/login
+  last_response_time: 3413
   status_id: 2
   site_id: 2

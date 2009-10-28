@@ -1,7 +1,16 @@
-%tr[watch]{:class => watch.status.css }
-  %td.name= watch.name
-  - if watch.url.length > 50
-    %td.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
-  - else
-    %td.url= link_to(watch.url, watch.url)
-  %td.status= watch.status.name
+%tr[watch]{:class => watch.status.css, :onclick => "location.href = '#{watch_path(watch)}'" }
+  %td.name
+    %span.name= watch.name
+    - if watch.url.length > 50
+      %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
+    - else
+      %span.url= link_to(watch.url, watch.url)
+  %td.status
+    %span.status= watch.status.name
+    - unless watch.status.id == Status::DISABLED
+      %span.response= watch.last_response_time.to_s + " ms"
+    - else
+      = link_to 'Enable?', '#'
+  %td.graph
+    = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :title => "Response times, last 24 hours")
+    

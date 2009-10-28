@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :watches
+  
+  map.resources :watches, :collection => { :response_graph => :get }
 
   map.resources :sites
 
