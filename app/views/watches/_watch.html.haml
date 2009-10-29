@@ -1,19 +1,25 @@
-%tr[watch]{:class => watch.status.css }
-  %td.name{:onclick => "location.href = '#{watch_path(watch)}'"}
-    %span.name= watch.name
-    - if watch.url.length > 50
-      %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
-    - else
-      %span.url= link_to(watch.url, watch.url)
-  %td.status
-    %span.status= watch.status.name
-    - unless watch.status.id == Status::DISABLED
-      %span.response= watch.last_response_time.to_s + " ms"
-    - else
-      = link_to 'Enable?', '#'
-  %td.graph
-    %ul
-      %li{:class => 'current'}= link_to_function 'Last 24 hours', "watchBlock.changeGraph(this, #{watch.id}, 'last_24')"
-      %li= link_to_function 'Last hour', "watchBlock.changeGraph($(this), #{watch.id}, 'current_24')"
-    = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")
-    
+- if (watch.warning_time && watch.last_response_time > watch.warning_time)
+  - warning = true
+- else
+  - warning = false
+  
+%table
+  %tr
+    %td.name{:onclick => "location.href = '#{watch_path(watch)}'"}
+      %span.name= watch.name
+      - if watch.url.length > 50
+        %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
+      - else
+        %span.url= link_to(watch.url, watch.url)
+    %td.status
+      %span.status
+        = warning ? 'Warning' : watch.status.name
+      - unless watch.status.id == Status::DISABLED
+        %span.response= watch.last_response_time.to_s + " ms"
+      - else
+        = link_to 'Enable?', '#'
+    %td.graph
+      %ul
+        %li{:class => 'current'}= link_to_function 'Last 24 hours', "watchBlock.changeGraph(this, #{watch.id}, 'last_24')"
+        %li= link_to_function 'Last hour', "watchBlock.changeGraph($(this), #{watch.id}, 'current_24')"
+      = image_tag(response_graph_watches_path + "/#{watch.id}?type=last_24", :alt => "Last 24 hours response times for #{watch.name}", :class => 'graph', :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")

@@ -17,12 +17,20 @@ class WatchesController < ApplicationController
 
   # GET /watches/1
   # GET /watches/1.xml
+  
   def show
+    no_cache
+    
     @watch = Watch.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @watch }
+    
+    if params[:view] == 'mini'
+      render :partial => 'watch', :layout => false
+    else
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @watch.to_json(:include => :status) }
+        format.json { render :json => @watch.to_json(:include => :status) }
+      end
     end
   end
 
@@ -93,17 +101,22 @@ class WatchesController < ApplicationController
   def response_graph
     points = []
     if params[:type].nil? || params[:type] == 'last_24'
-      24.times do |num|
-        points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num).hours.ago.to_s(:db), (num+1).hours.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+      # showing graph for the last 24 hours. Get averages for each hour from the database
+      png = data_cache(Digest::MD5.hexdigest(request.env['REQUEST_URI']), {:timeout => 1.hour}) do
+        24.times do |num|
+          points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num).hours.ago.to_s(:db), (num+1).hours.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+        end
+        Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 10, :normalize => 'logarithmic' ) 
       end
-      png = Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 10, :normalize => 'logarithmic' ) 
     elsif params[:type] == 'current_24'
-      30.times do |num|
-        points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num*2).minutes.ago.to_s(:db), (num*2+2).minutes.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+      png = data_cache(Digest::MD5.hexdigest(request.env['REQUEST_URI']), {:timeout => 2.minutes}) do
+        # showing graph for the last hour. Get averages for every 2 minutes for the last hour from the database
+        30.times do |num|
+          points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num*2).minutes.ago.to_s(:db), (num*2+2).minutes.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+        end
+        Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 8, :normalize => 'logarithmic' ) 
       end
-      png = Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 8, :normalize => 'logarithmic' ) 
     end
-    logger.debug("Points: #{points.inspect}")
     send_data png, :type => 'image/png', :disposition => 'inline'
   end
   

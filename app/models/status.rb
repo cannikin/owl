@@ -4,5 +4,6 @@ class Status < ActiveRecord::Base
   DOWN = 2
   DISABLED = 3
   UNKNOWN = 4
+  WARNING = 5
 
 end

@@ -3,9 +3,11 @@
 ihoops:
   id: 1
   name: Homepage
-  url: http://ihoops.com/
+  url: http://www.ihoops.com/
   last_response_time: 124
   active: true
+  content: 'Welcome to iHoops.com'
+  warning_time: 600
   status_id: 1
   site_id: 1
 
@@ -24,6 +26,7 @@ sportsstudiocasting2:
   url: http://sportsstudiocasting.com/login
   last_response_time: 3413
   active: true
-  status_id: 2
+  warning_time: 1000
+  status_id: 1
   site_id: 2
   

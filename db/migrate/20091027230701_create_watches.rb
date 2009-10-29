@@ -4,7 +4,9 @@ class CreateWatches < ActiveRecord::Migration
       t.string :name
       t.string :url
       t.integer :last_response_time
+      t.integer :warning_time
       t.boolean :active, :default => true
+      t.string :content
       t.integer :status_id, :default => Status::DISABLED
       t.integer :site_id
       

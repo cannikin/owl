@@ -19,3 +19,9 @@ unknown:
   id: 4
   name: Unknown
   css: unknown  
+
+warning:
+  id: 5
+  name: Warning
+  css: warning
+  

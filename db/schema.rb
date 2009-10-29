@@ -43,7 +43,9 @@ ActiveRecord::Schema.define(:version => 20091028171657) do
     t.string   "name"
     t.string   "url"
     t.integer  "last_response_time"
-    t.boolean  "active",             :default => false
+    t.integer  "warning_time"
+    t.boolean  "active",             :default => true
+    t.string   "content"
     t.integer  "status_id",          :default => 3
     t.integer  "site_id"
     t.datetime "created_at"

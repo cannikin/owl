@@ -1,7 +1,8 @@
 class DashboardController < ApplicationController
   
   def index
-    @sites = Site.all
+    @page_title = 'Dashboard'
+    @sites = Site.all :include => { :watches => :status }
   end
 
 end
