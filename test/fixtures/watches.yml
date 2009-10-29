@@ -1,25 +1,29 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+ihoops:
   id: 1
   name: Homepage
   url: http://ihoops.com/
   last_response_time: 124
+  active: true
   status_id: 1
   site_id: 1
 
-two:
+sportsstudiocasting1:
   id: 2
   name: Homepage
   url: http://sportsstudiocasting.com
   last_response_time: 243
+  active: true
   status_id: 1
   site_id: 2
   
-three:
+sportsstudiocasting2:
   id: 3
   name: Login
   url: http://sportsstudiocasting.com/login
   last_response_time: 3413
+  active: true
   status_id: 2
   site_id: 2
+  

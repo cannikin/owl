@@ -9,7 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091027232114) do
+ActiveRecord::Schema.define(:version => 20091028171657) do
+
+  create_table "headers", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "response_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responses", :force => true do |t|
+    t.integer  "time"
+    t.integer  "status"
+    t.string   "reason"
+    t.integer  "watch_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sites", :force => true do |t|
     t.string   "name"
@@ -26,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20091027232114) do
     t.string   "name"
     t.string   "url"
     t.integer  "last_response_time"
+    t.boolean  "active",             :default => false
     t.integer  "status_id",          :default => 3
     t.integer  "site_id"
     t.datetime "created_at"

@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+# Active Inspiration Crawler
+#
+# This script goes out to sites, pulls in queries that match the keywords in
+# memes_services.keyword and then inserts them into the database. This crawler 
+# is meant to run constantly. You daemonize it and then let it crunch through
+# data all day long.
+
+require File.join(File.dirname(__FILE__), '/../../core_extensions')
+require_relative '../lib/runner'
+
+module Mouse
+  
+  VERSION = '0.1'
+  
+  class << self
+    attr_accessor :logger, :options
+  end
+  
+  @logger = nil
+  @options = nil
+  
+  def self.new(*args)
+    Runner.new(*args)
+  end
+  
+end
+
+Mouse.new(ARGV)

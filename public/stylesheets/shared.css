@@ -23,8 +23,8 @@ h1 a span {
   width: 100%;
   background-color: #5e3500;
   -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
   margin: 2em 0 1em;
-  cursor: pointer;
 }
 #sites .site .container {
   padding: 1em 1.5em 1.5em;
@@ -37,22 +37,28 @@ h1 a span {
   text-shadow: 2px 2px 2px rgba(0,0,0,.6);
 }
 #sites .site .container table {
+  cursor: pointer;
   color: #666666;
   -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
   background-color: #eeeeee;
   width: 100%;
 }
 #sites .site .container table tr:first-child td:first-child {
   -moz-border-radius: 5px 0 0 0;
+  -webkit-border-radius: 5px 0 0 0;
 }
 #sites .site .container table tr:first-child td:last-child {
   -moz-border-radius: 0 5px 0 0;
+  -webkit-border-radius: 0 5px 0 0;
 }
 #sites .site .container table tr:last-child td:first-child {
   -moz-border-radius: 0 0 0 5px;
+  -webkit-border-radius: 0 0 0 5px;
 }
 #sites .site .container table tr:last-child td:last-child {
   -moz-border-radius: 0 0 5px 0;
+  -webkit-border-radius: 0 0 5px 0;
 }
 #sites .site .container table tr:last-child td {
   border-bottom: none;
@@ -99,11 +105,38 @@ h1 a span {
   width: 235px;
   text-align: right;
 }
+#sites .site .container table td.graph ul {
+  font-size: 85%;
+  margin: 0 0.5em;
+}
+#sites .site .container table td.graph ul li {
+  display: inline;
+  padding: 0 0.5em;
+}
+#sites .site .container table td.graph ul li.current {
+  background-color: rgba(255,255,255,1);
+  -moz-border-radius: 2px 2px 0 0;
+}
+#sites .site .container table td.graph ul li.current a {
+  color: #638562;
+}
+#sites .site .container table td.graph ul li.current a:hover {
+  color: #638562;
+}
+#sites .site .container table td.graph ul li a {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  outline: none;
+}
+#sites .site .container table td.graph ul li a:hover {
+  color: rgba(255,255,255,1);
+}
 #sites .site .container table td.graph img {
   display: block;
   padding: .3em;
   background-color: #ffffff;
   -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 #sites .site .container table tr.up td {
   background-color: #638562;
@@ -132,7 +165,9 @@ h1 a span {
   margin: 0.5em 0 0;
   float: right;
   -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
+  -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.3);
 }
 #sites .site .container .new_watch:hover {
   background-color: #04b502;
@@ -149,6 +184,7 @@ h1 a span {
 }
 #sites #add_site h2 {
   -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
   text-shadow: 2px 2px 2px rgba(0,0,0,.6);
   background-color: #009900;
   font-size: 200%;

@@ -1,6 +1,9 @@
 require 'lib/spark_pr.rb'
 
 class WatchesController < ApplicationController
+  
+  NO_RESPONSE_TIME = 100
+  
   # GET /watches
   # GET /watches.xml
   def index
@@ -89,11 +92,18 @@ class WatchesController < ApplicationController
   # returns the response time graph for a given watch
   def response_graph
     points = []
-    24.times do |num|
-      points << rand(100) + 1
+    if params[:type].nil? || params[:type] == 'last_24'
+      24.times do |num|
+        points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num).hours.ago.to_s(:db), (num+1).hours.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+      end
+      png = Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 10, :normalize => 'logarithmic' ) 
+    elsif params[:type] == 'current_24'
+      30.times do |num|
+        points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num*2).minutes.ago.to_s(:db), (num*2+2).minutes.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+      end
+      png = Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 8, :normalize => 'logarithmic' ) 
     end
     logger.debug("Points: #{points.inspect}")
-    png = Spark.plot(points, :type => 'smooth', :has_min => true, :has_max => true, 'has_last' => 'true', 'height' => '40', :step => 10, :normalize => 'logarithmic' ) 
     send_data png, :type => 'image/png', :disposition => 'inline'
   end
   

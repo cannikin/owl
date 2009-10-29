@@ -10,7 +10,7 @@
     = javascript_include_tag 'prototype','effects','application'
     = yield :head  # if you want to add any other code to the head, add it via `content_for :head do` in any view and it'll end up here
       
-  %body{:id => controller.controller_name}
+  %body
     %h1= link_to '<span>Owl</span>', root_path
     
     = yield
