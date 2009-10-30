@@ -1,6 +1,6 @@
 %div[site]
   .container
-    %h2= site.name
+    %h2= link_to(site.name, site_path(site))
     - site.watches.each do |watch| 
       %div[watch]{:class => watch.status.css}
         = render :partial => 'watches/watch', :locals => { :watch => watch }

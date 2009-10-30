@@ -1,0 +1,7 @@
+#sites
+  = render :partial => 'sites/site', :locals => { :site => @site }
+
+= link_to 'Delete This Group', @site, :confirm => 'Are you sure?', :method => :delete, :class => 'delete'
+
+:javascript
+  Event.observe(window,'dom:loaded',function() { watchBlock.setGraphsFromCookie() });

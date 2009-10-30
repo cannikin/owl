@@ -12,13 +12,18 @@
     <%= f.text_field :url %>
   </p>
   <p>
+    <%= f.label :warning_time %><br />
+    <%= f.text_field :warning_time %>
+  </p>
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </p>
+  <p>
     <%= f.label :site_id %><br />
     <%= f.select :site_id, Site.all.map { |s| [s.name,s.id] } %>
   </p>
   <p>
-    <%= f.submit 'Update' %>
+    <%= f.submit 'Update' %> or <%= link_to 'Cancel', sites_path %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @watch %> |
-<%= link_to 'Back', watches_path %>

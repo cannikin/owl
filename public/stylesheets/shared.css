@@ -36,6 +36,10 @@ h1 a span {
   color: #ffffff;
   text-shadow: 2px 2px 2px rgba(0,0,0,.6);
 }
+#sites .site .container h2 a {
+  color: #ffffff;
+  text-decoration: none;
+}
 #sites .site .container div.watch {
   cursor: pointer;
   margin: 0 0 .3em;
@@ -63,9 +67,11 @@ h1 a span {
   font-size: 100%;
 }
 #sites .site .container div.watch td.name a {
+  color: #ffffff;
   color: rgba(255,255,255,.6);
 }
 #sites .site .container div.watch td.name a:hover {
+  color: #ffffff;
   color: rgba(255,255,255,1);
 }
 #sites .site .container div.watch td.status {
@@ -120,6 +126,9 @@ h1 a span {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+#sites .site .container div.watch.up {
+  background-color: #638562;
+}
 #sites .site .container div.watch.up:hover {
   background-color: #7A9F78;
 }
@@ -128,6 +137,9 @@ h1 a span {
 }
 #sites .site .container div.watch.disabled:hover {
   background-color: #999999;
+}
+#sites .site .container div.watch.warning {
+  background-color: #EEBD4E;
 }
 #sites .site .container div.watch.warning:hover {
   background-color: #FFC02F;
@@ -170,4 +182,17 @@ h1 a span {
   text-decoration: none;
   display: block;
   padding: 0.5em 1em;
+}
+
+.delete {
+  color: #ffffff;
+  display: block;
+  float: right;
+  clear: both;
+  margin: 5em;
+  font-size: 116%;
+  background-color: #990000;
+  text-decoration: none;
+  padding: 0.2em 1em;
+  -moz-border-radius: 4px;
 }

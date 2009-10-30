@@ -30,6 +30,10 @@ h1
         margin: 0 0 .4em
         color: #ffffff
         text-shadow: 2px 2px 2px rgba(0,0,0,.6)
+        a
+          color: #ffffff
+          text-decoration: none
+          
       div.watch
         cursor: pointer
         margin: 0 0 .3em
@@ -50,8 +54,10 @@ h1
             span.url
               font-size: 100%
             a
+              color: #ffffff
               color: rgba(255,255,255,.6)
               &:hover
+                color: #ffffff
                 color: rgba(255,255,255,1)
           &.status
             width: 80px
@@ -94,7 +100,7 @@ h1
               -webkit-border-radius: 5px
         // statuses
         &.up
-          /background-color: #638562
+          background-color: #638562
           &:hover
             background-color: #7A9F78
         &.down
@@ -108,7 +114,7 @@ h1
         &.unknown
           /background-color: #aaaaaa
         &.warning
-          /background-color: #EEBD4E
+          background-color: #EEBD4E
           &:hover
             background-color: #FFC02F
     
@@ -146,3 +152,15 @@ h1
         display: block
         padding: 0.5em 1em
         
+.delete
+  color: #ffffff
+  display: block
+  float: right
+  clear: both
+  margin: 5em
+  font-size: 116%
+  background-color: #990000
+  text-decoration: none
+  padding: 0.2em 1em
+  -moz-border-radius: 4px
+  

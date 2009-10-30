@@ -3,7 +3,7 @@ class CreateWatches < ActiveRecord::Migration
     create_table :watches do |t|
       t.string :name
       t.string :url
-      t.integer :last_response_time
+      t.integer :last_response_time, :default => 0
       t.integer :warning_time
       t.boolean :active, :default => true
       t.string :content

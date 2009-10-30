@@ -3,3 +3,7 @@
   
   #add_site
     %h2= link_to '+ Add Group', new_site_path
+
+:javascript
+  Event.observe(window,'dom:loaded',function() { watchBlock.setGraphsFromCookie() });
+  
