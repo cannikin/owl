@@ -40,6 +40,7 @@ h1
         background-color: transparent
         color: #ffffff
         -moz-border-radius: 6px
+        -webkit-border-radius: 6px
         table
           width: 100%
         td
@@ -82,6 +83,7 @@ h1
                 &.current
                   background-color: rgba(255,255,255,1)
                   -moz-border-radius: 2px 2px 0 0
+                  -webkit-border-radius: 2px 2px 0 0
                   a
                     color: #638562
                     &:hover
@@ -104,15 +106,17 @@ h1
           &:hover
             background-color: #7A9F78
         &.down
-          /background-color: #921C1C
+          background-color: #921C1C
           &:hover
             background-color: #AE2D2D
         &.disabled
-          /background-color: #aaaaaa
+          background-color: #aaaaaa
           &:hover
             background-color: #999999
         &.unknown
-          /background-color: #aaaaaa
+          background-color: #666666
+          &:hover
+            background-color: #555555
         &.warning
           background-color: #EEBD4E
           &:hover
@@ -163,4 +167,4 @@ h1
   text-decoration: none
   padding: 0.2em 1em
   -moz-border-radius: 4px
-  
+  -webkit-border-radius: 4px

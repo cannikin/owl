@@ -24,6 +24,10 @@
     <%= f.select :site_id, Site.all.map { |s| [s.name,s.id] } %>
   </p>
   <p>
+    <%= f.label :active %><br />
+    <%= f.check_box :active %>
+  </p>
+  <p>
     <%= f.submit 'Update' %> or <%= link_to 'Cancel', sites_path %>
   </p>
 <% end %>

@@ -21,7 +21,10 @@ watchBlock = {
       var value = unescape(cookie.split('=').last());
       values = $H(value.evalJSON());
       values.each(function(pair) {
-        $("watch_"+pair.key+"_"+pair.value).addClassName('current');
+        var obj = $("watch_"+pair.key+"_"+pair.value);
+        if (obj) {
+          $("watch_"+pair.key+"_"+pair.value).addClassName('current');
+        }
       });
     });
   },
@@ -38,23 +41,37 @@ watchBlock = {
   update:function(watch) {
     var container = $('watch_'+watch.id);
     container.down('span.status').update(watch.status.name);
+    if (container.down('span.enable')) {
+      container.down('span.enable').removeClassName('enable').addClassName('response');
+    }
     container.down('span.response').update(watch.last_response_time + ' ms');
-    container.down('img.graph').src = '/watches/response_graph/'+watch.id+'?'+Date.now();
+    if (container.down('img.graph')) {
+      container.down('img.graph').src = '/watches/response_graph/'+watch.id+'?'+Date.now();
+    }
     
-    ['up','down','disabled','warning','unknown'].each(function(class_name) {
-      container.removeClassName(class_name);
-    });
+    // if the container doesn't already contain this class name, we need to change it
+    if (!container.hasClassName(watch.status.css)) {
+      
+      // remove existing class names
+      ['up','down','disabled','warning','unknown'].each(function(class_name) {
+        container.removeClassName(class_name);
+      });
     
-    // add current style back in
-    container.addClassName(watch.status.css);
-    if (watch.status.css == 'warning') {
-      container.morph('background-color: #EEBD4E');
-    } else if (watch.status.css == 'up') {
-      container.morph('background-color: #638562');
-    } else if (watch.status.css == 'down') {
-      container.morph('background-color: #921C1C');
-    } else if (watch.status.css == 'disabled') {
-      container.morph('background-color: #aaaaaa');
+      // add current style back in
+      container.addClassName(watch.status.css);
+    
+      // fade the color
+      if (watch.status.css == 'warning') {
+        container.morph('background-color: #EEBD4E');
+      } else if (watch.status.css == 'up') {
+        container.morph('background-color: #638562');
+      } else if (watch.status.css == 'down') {
+        container.morph('background-color: #921C1C');
+      } else if (watch.status.css == 'disabled') {
+        container.morph('background-color: #aaaaaa');
+      } else if (watch.status.css == 'unknown') {
+        container.morph('background-color: #666666');
+      }
     }
 
   }

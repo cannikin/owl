@@ -3,11 +3,17 @@ class SitesController < ApplicationController
   # GET /sites.xml
   def index
     @sites = Site.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @sites }
     end
+  end
+  
+  # same as index, just formatted differently
+  def slides
+    @sites = Site.all
+    render :index
   end
 
   # GET /sites/1

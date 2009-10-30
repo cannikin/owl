@@ -20,9 +20,13 @@ module Mouse
           time = ((Time.now - time) * 1000).to_i
           up(watch, http, time)
         rescue SocketError => e
-          down(watch)
+          # URL is invalid
+          down(watch, 'URL is invalid')
         rescue HTTPClient::ReceiveTimeoutError => e
-          down(watch)
+          down(watch, 'ReceiveTimeoutError')
+        rescue HTTPClient::ConnectTimeoutError => e
+          # Site isn't responding
+          down(watch, 'Site not responding (timeout)')
         end
 
       end
@@ -50,10 +54,10 @@ module Mouse
       
     
       # called when a site is considered down
-      def down(watch)
+      def down(watch, message='')
         watch.update_attributes(:last_response_time => 0, :status_id => Status::DOWN)
         watch.responses.create(:time => 0, :status => 0, :reason => 'error')
-        Mouse.logger.error("  ** No response from #{watch.url}")
+        Mouse.logger.error("  ** #{message}")
       end
       
       

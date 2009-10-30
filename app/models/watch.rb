@@ -6,4 +6,13 @@ class Watch < ActiveRecord::Base
   
   named_scope :active, :conditions => { :active => true }
   
+  before_save :set_status
+  
+  private
+    
+    def set_status
+      unless self.active
+        self.status_id = Status::DISABLED
+      end
+    end
 end

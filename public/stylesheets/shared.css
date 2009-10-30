@@ -46,6 +46,7 @@ h1 a span {
   background-color: transparent;
   color: #ffffff;
   -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 #sites .site .container div.watch table {
   width: 100%;
@@ -104,6 +105,7 @@ h1 a span {
 #sites .site .container div.watch td.graph ul li.current {
   background-color: rgba(255,255,255,1);
   -moz-border-radius: 2px 2px 0 0;
+  -webkit-border-radius: 2px 2px 0 0;
 }
 #sites .site .container div.watch td.graph ul li.current a {
   color: #638562;
@@ -132,11 +134,23 @@ h1 a span {
 #sites .site .container div.watch.up:hover {
   background-color: #7A9F78;
 }
+#sites .site .container div.watch.down {
+  background-color: #921C1C;
+}
 #sites .site .container div.watch.down:hover {
   background-color: #AE2D2D;
 }
+#sites .site .container div.watch.disabled {
+  background-color: #aaaaaa;
+}
 #sites .site .container div.watch.disabled:hover {
   background-color: #999999;
+}
+#sites .site .container div.watch.unknown {
+  background-color: #666666;
+}
+#sites .site .container div.watch.unknown:hover {
+  background-color: #555555;
 }
 #sites .site .container div.watch.warning {
   background-color: #EEBD4E;
@@ -195,4 +209,5 @@ h1 a span {
   text-decoration: none;
   padding: 0.2em 1em;
   -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }

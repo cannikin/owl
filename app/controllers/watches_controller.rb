@@ -104,45 +104,42 @@ class WatchesController < ApplicationController
     
     no_cache
     
-    logger.debug("  COOKIES: " + cookies[:graphs].to_s)
-    
-    # if params[:type] comes in then the user wanted to switch types, so save their preference
     if params[:type]
+      # if params[:type] comes in then the user wanted to switch types, so save their preference
       set_graph_cookies(params[:id], params[:type])
       type = params[:type]
     else
+      # otherwise, see what's in their cookie, or set one if it doesn't exist
       if this_graph_type = @graph_cookies[params[:id].to_s]
         type = this_graph_type
       else
         type = 'last_24'
+        set_graph_cookies(params[:id], type)
       end
-    end
-    
-    if cookies[:graphs].nil?
-      set_graph_cookies(params[:id], type)
     end
     
     logger.debug("  TYPE: #{type}")
-    key = { :id => params[:id], :type => type }.to_json
+    key = Digest::MD5.hexdigest({ :id => params[:id], :type => type }.to_json)
   
     # if they didn't pass a type, assume it's the last 24 hours
     points = []
-    if type == 'last_24'
-      # showing graph for the last 24 hours. Get averages for each hour from the database
-      png = data_cache(Digest::MD5.hexdigest(key), {:timeout => 1.hour}) do
-        24.times do |num|
-          points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num).hours.ago.to_s(:db), (num+1).hours.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+    case type
+      when 'last_24'
+        # showing graph for the last 24 hours. Get averages for each hour from the database
+        png = data_cache(key, {:timeout => 1.hour}) do
+          24.times do |num|
+            points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num).hours.ago.to_s(:db), (num+1).hours.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+          end
+          Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 10, :normalize => 'logarithmic' ) 
         end
-        Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 10, :normalize => 'logarithmic' ) 
-      end
-    elsif type == 'current_24'
-      png = data_cache(Digest::MD5.hexdigest(key), {:timeout => 2.minutes}) do
-        # showing graph for the last hour. Get averages for every 2 minutes for the last hour from the database
-        30.times do |num|
-          points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num*2).minutes.ago.to_s(:db), (num*2+2).minutes.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+      when 'last_1'
+        png = data_cache(key, {:timeout => 2.minutes}) do
+          # showing graph for the last hour. Get averages for every 2 minutes for the last hour from the database
+          30.times do |num|
+            points << (Response.average(:time, :conditions => ["watch_id = ? and time != 0 and created_at < ? and created_at > ?", params[:id], (num*2).minutes.ago.to_s(:db), (num*2+2).minutes.ago.to_s(:db)]) || NO_RESPONSE_TIME)
+          end
+          Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 8, :normalize => 'logarithmic' ) 
         end
-        Spark.plot(points.reverse, :type => 'smooth', :has_min => true, :has_max => true, :has_last => 'true', :height => 40, :step => 8, :normalize => 'logarithmic' ) 
-      end
     end
     send_data png, :type => 'image/png', :disposition => 'inline'
   end
@@ -150,7 +147,7 @@ class WatchesController < ApplicationController
   private
     
     def set_graph_cookies(id,type)
-      cookies[:graphs] = (@graph_cookies.merge({ id => type })).to_json
+      cookies[:graphs] = { :value => (@graph_cookies.merge({ id => type })).to_json, :expires => 10.years.from_now }
     end
     
     def get_graph_cookies
