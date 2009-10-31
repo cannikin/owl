@@ -1,10 +1,9 @@
 %div[site]
-  .container
-    %h2= link_to(site.name, site_path(site))
-    - site.watches.each do |watch| 
-      %div[watch]{:class => watch.status.css}
-        = render :partial => 'watches/watch', :locals => { :watch => watch }
-    %h3.new_watch= link_to '+ Add URL', new_watch_path(:site_id => site.id)
+  %h2= link_to(site.name, site_path(site))
+  - site.watches.each do |watch| 
+    %div[watch]{:class => watch.status.css}
+      = render :partial => 'watches/watch', :locals => { :watch => watch, :mode => mode }
+  %h3.new_watch= link_to '+ Add URL', new_watch_path(:site_id => site.id)
 
 - site.watches.each do |watch| 
   :javascript

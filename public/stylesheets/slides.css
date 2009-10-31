@@ -3,43 +3,38 @@ h1 {
 }
 
 #sites {
-  margin: 1em;
+  margin: 10px 0 10px 10px;
 }
 #sites .site {
   background-color: transparent;
   margin: 0;
-}
-#sites .site .container {
-  background-color: transparent;
   padding: 0;
 }
-#sites .site .container h2 {
+#sites .site h2 {
   display: none;
 }
-#sites .site .container .watch {
+#sites .site .watch {
   float: left;
   width: 300px;
   height: 100px;
-  margin: 0 1em 1em 0!important;
+  margin: 0 10px 10px 0!important;
   display: block;
+  min-width: 250px;
   -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
   -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
 }
-#sites .site .container .watch table td.name {
+#sites .site .watch div.name {
   width: auto;
 }
-#sites .site .container .watch table td.name span.name {
+#sites .site .watch div.name span.name {
   font-size: 146.5%;
 }
-#sites .site .container .watch table td.status {
+#sites .site .watch div.status {
   width: auto;
 }
-#sites .site .container .watch table td.graph {
+#sites .site .watch div.graph {
   display: none;
 }
-#sites .site .container .new_watch {
-  display: none;
-}
-#sites #add_site {
+#sites .site .new_watch {
   display: none;
 }

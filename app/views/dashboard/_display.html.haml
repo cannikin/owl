@@ -1,0 +1,3 @@
+#sites
+  - local_assigns[:locals][:sites].each do |site|
+    = render :partial => 'sites/site', :locals => { :site => site, :mode => local_assigns[:locals][:mode] }

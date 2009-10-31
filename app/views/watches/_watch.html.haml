@@ -13,7 +13,7 @@
   - else
     %span.url= link_to(watch.url, watch.url)
 
-- unless params[:action] == 'slides'
+- if mode == :extended
   .graph
     %ul
       %li{:id => "watch_#{watch.id}_last_24"}= link_to_function 'Last 24 hours', "watchBlock.changeGraph(this, #{watch.id}, 'last_24')"

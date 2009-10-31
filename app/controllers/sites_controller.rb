@@ -3,16 +3,19 @@ class SitesController < ApplicationController
   # GET /sites.xml
   def index
     @sites = Site.all
-    
+    @mode = :extended
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @sites }
     end
   end
   
+  alias :extended :index
+  
   # same as index, just formatted differently
-  def slides
+  def compact
     @sites = Site.all
+    @mode = :compact
     render :index
   end
 
