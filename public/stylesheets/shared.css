@@ -47,81 +47,79 @@ h1 a span {
   color: #ffffff;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
+  overflow: hidden;
 }
-#sites .site .container div.watch table {
-  width: 100%;
-}
-#sites .site .container div.watch td {
+#sites .site .container div.watch div {
   padding: .5em 1em;
+  float: left;
 }
-#sites .site .container div.watch td span {
+#sites .site .container div.watch div span {
   display: block;
 }
-#sites .site .container div.watch td.name {
-  width: auto;
-}
-#sites .site .container div.watch td.name span.name {
+#sites .site .container div.watch div.name span.name {
   font-size: 167%;
   text-shadow: 1px 1px 2px rgba(0,0,0,.6);
 }
-#sites .site .container div.watch td.name span.url {
+#sites .site .container div.watch div.name span.url {
   font-size: 100%;
 }
-#sites .site .container div.watch td.name a {
+#sites .site .container div.watch div.name a {
   color: #ffffff;
   color: rgba(255,255,255,.6);
 }
-#sites .site .container div.watch td.name a:hover {
+#sites .site .container div.watch div.name a:hover {
   color: #ffffff;
   color: rgba(255,255,255,1);
 }
-#sites .site .container div.watch td.status {
+#sites .site .container div.watch div.status {
   width: 80px;
   text-align: center;
+  float: right;
 }
-#sites .site .container div.watch td.status span.status {
+#sites .site .container div.watch div.status span.status {
   font-weight: bold;
   font-size: 146.5%;
   text-shadow: 1px 1px 2px rgba(0,0,0,.6);
 }
-#sites .site .container div.watch td.status span.response {
+#sites .site .container div.watch div.status span.response {
   font-size: 85%;
 }
-#sites .site .container div.watch td.status a {
+#sites .site .container div.watch div.status a {
   color: #ffffff;
 }
-#sites .site .container div.watch td.graph {
-  width: 235px;
+#sites .site .container div.watch div.graph {
+  width: 245px;
   text-align: right;
+  float: right;
 }
-#sites .site .container div.watch td.graph ul {
+#sites .site .container div.watch div.graph ul {
   font-size: 85%;
   margin: 0 0.5em;
 }
-#sites .site .container div.watch td.graph ul li {
+#sites .site .container div.watch div.graph ul li {
   display: inline;
   padding: 0 0.5em;
 }
-#sites .site .container div.watch td.graph ul li.current {
+#sites .site .container div.watch div.graph ul li.current {
   background-color: rgba(255,255,255,1);
   -moz-border-radius: 2px 2px 0 0;
   -webkit-border-radius: 2px 2px 0 0;
 }
-#sites .site .container div.watch td.graph ul li.current a {
+#sites .site .container div.watch div.graph ul li.current a {
   color: #638562;
 }
-#sites .site .container div.watch td.graph ul li.current a:hover {
+#sites .site .container div.watch div.graph ul li.current a:hover {
   color: #638562;
 }
-#sites .site .container div.watch td.graph ul li a {
+#sites .site .container div.watch div.graph ul li a {
   color: rgba(255,255,255,.6);
   text-decoration: none;
   outline: none;
 }
-#sites .site .container div.watch td.graph ul li a:hover {
+#sites .site .container div.watch div.graph ul li a:hover {
   color: rgba(255,255,255,1);
 }
-#sites .site .container div.watch td.graph img {
+#sites .site .container div.watch div.graph img {
   display: block;
   padding: .3em;
   background-color: #ffffff;

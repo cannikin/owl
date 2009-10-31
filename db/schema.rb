@@ -42,12 +42,13 @@ ActiveRecord::Schema.define(:version => 20091028171657) do
   create_table "watches", :force => true do |t|
     t.string   "name"
     t.string   "url"
-    t.integer  "last_response_time", :default => 0
+    t.integer  "last_response_time",    :default => 0
     t.integer  "warning_time"
-    t.boolean  "active",             :default => true
-    t.string   "content"
-    t.integer  "status_id",          :default => 3
+    t.boolean  "active",                :default => true
+    t.string   "content_match"
+    t.integer  "status_id",             :default => 1
     t.integer  "site_id"
+    t.datetime "last_status_change_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

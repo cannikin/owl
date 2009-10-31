@@ -3,27 +3,27 @@
 - else
   - warning = false
   
-%table
-  %tr
-    %td.name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
-      %span.name
-        - if params[:action] == 'slides'
-          = watch.site.name
-        = watch.name
-      - if params[:action] == 'slides' && watch.url.length > 25
-        %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
-      - else
-        %span.url= link_to(watch.url, watch.url)
-    %td.status
-      %span.status
-        = warning ? 'Warning' : watch.status.name
-      - unless watch.status.id == Status::DISABLED
-        %span.response= watch.last_response_time.to_s + " ms"
-      - else
-        %span.enable= link_to_remote 'Enable?', :url => { :controller => 'watches', :action => 'update', :id => watch.id }, :success => "$('watch_#{watch.id}').down('span.status').update('Enabled'); $('watch_#{watch.id}').down('span.enable').update('').addClassName('response').removeClassName('enable');", :method => :put, :with => "'watch[active]=1'"
-    - unless params[:action] == 'slides'
-      %td.graph
-        %ul
-          %li{:id => "watch_#{watch.id}_last_24"}= link_to_function 'Last 24 hours', "watchBlock.changeGraph(this, #{watch.id}, 'last_24')"
-          %li{:id => "watch_#{watch.id}_last_1"}= link_to_function 'Last hour', "watchBlock.changeGraph($(this), #{watch.id}, 'last_1')"
-        = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :class => 'graph', :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")
+.name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
+  %span.name
+    - if params[:action] == 'slides'
+      = watch.site.name
+    = watch.name
+  - if params[:action] == 'slides' && watch.url.length > 25
+    %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
+  - else
+    %span.url= link_to(watch.url, watch.url)
+
+- unless params[:action] == 'slides'
+  .graph
+    %ul
+      %li{:id => "watch_#{watch.id}_last_24"}= link_to_function 'Last 24 hours', "watchBlock.changeGraph(this, #{watch.id}, 'last_24')"
+      %li{:id => "watch_#{watch.id}_last_1"}= link_to_function 'Last hour', "watchBlock.changeGraph($(this), #{watch.id}, 'last_1')"
+    = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :class => 'graph', :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")
+
+.status
+  %span.status
+    = warning ? 'Warning' : watch.status.name
+  - unless watch.status.id == Status::DISABLED
+    %span.response= watch.last_response_time.to_s + " ms"
+  - else
+    %span.enable= link_to_remote 'Enable?', :url => { :controller => 'watches', :action => 'update', :id => watch.id }, :success => "$('watch_#{watch.id}').down('span.status').update('Enabled'); $('watch_#{watch.id}').down('span.enable').update('').addClassName('response').removeClassName('enable');", :method => :put, :with => "'watch[active]=1'"
