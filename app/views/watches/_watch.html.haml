@@ -4,14 +4,14 @@
   - warning = false
   
 .name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
-  %span.name
-    - if params[:action] == 'slides'
-      = watch.site.name
-    = watch.name
-  - if params[:action] == 'slides' && watch.url.length > 25
-    %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
-  - else
-    %span.url= link_to(watch.url, watch.url)
+  %span.site_name= watch.site.name
+  %span.name= watch.name
+  %span.url= link_to(watch.url, watch.url)
+  -#
+    - if params[:action] == 'slides' && watch.url.length > 25
+      %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
+    - else
+      %span.url= link_to(watch.url, watch.url)
 
 - if mode == :extended
   .graph

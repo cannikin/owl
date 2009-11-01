@@ -1,17 +1,8 @@
-= stylesheet_link_tag 'slides'
+- content_for :head do
+  = stylesheet_link_tag 'slides'
 
 = render 'display', :locals => { :sites => @sites, :mode => :compact }
 
 :javascript
-  Event.observe(window,'resize',function() {
-    var width = document.viewport.getWidth();
-    var watches = $$('.watch');
-    var container_margin = 10;
-    var watch_width = Math.floor((width / watches.length - 10) - (container_margin / watches.length));
-    watches.each(function(element) {
-      element.setStyle({'width':watch_width+'px'});
-    });
-    watches.last().setStyle({'marginLeft':0});
-  });
-  
-  Event.observe(window,'dom:loaded',function() { window.onresize(); });
+  Event.observe(window,'resize', resizePanels);
+  Event.observe(window,'dom:loaded', resizePanels);

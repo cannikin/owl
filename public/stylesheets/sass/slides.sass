@@ -3,6 +3,7 @@ h1
   display: none
 #sites
   margin: 10px 0 10px 10px
+  overflow: hidden
   .site
     background-color: transparent
     margin: 0
@@ -15,16 +16,18 @@ h1
       height: 100px
       margin: 0 10px 10px 0!important
       display: block
-      min-width: 250px
+      min-width: 200px
       -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.2)
       -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.2)
       div
         &.name
           width: auto
           span.name
-            font-size: 146.5%
+            font-size: 131% !important
         &.status
+          display: none
           width: auto
+          font-size: 85% !important
         &.graph
           display: none
     .new_watch

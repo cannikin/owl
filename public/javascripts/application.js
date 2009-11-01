@@ -1,3 +1,29 @@
+// Called when the browser is resized to resize each of the slides in the compact dashboard view
+function resizePanels() {
+  var watches = $$('.watch');
+  var container_margin = $('sites').getStyle('marginLeft').match(/\d+/);  // how much space we need to reserve for the margins
+  var browser_width = parseInt(document.viewport.getWidth());             // browser width
+  var watch_margin = parseInt(watches.first().getStyle('marginRight').match(/\d+/));
+  var watch_max_width = parseInt(watches.first().getStyle('minWidth').match(/\d+/));
+  var i = watches.length;
+  
+  // start counting backwards through the number of total watches until we find a width for each that is greater than the max width
+  do {
+    var watch_width = figureWatchWidth(browser_width, i, watch_margin, container_margin);  // how wide one slide should be
+    i--;
+  } while (watch_width < watch_max_width)
+
+  // resize each slide
+  watches.each(function(element) {
+    element.setStyle({'width':watch_width+'px'});
+  });
+  
+}
+
+function figureWatchWidth(browser_width,total,watch_margin,container_margin) {
+  return (browser_width / total - watch_margin) - (container_margin /total);  // how wide one slide should be
+}
+
 function getCookie(c_name) {
   if (document.cookie.length>0) {
     c_start=document.cookie.indexOf(c_name + "=");
