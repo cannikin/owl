@@ -4,13 +4,14 @@ require 'logger'
 module Mouse
   class Options
     
-    attr_reader :env, :log_level, :log_output, :interval, :write_headers
+    attr_reader :env, :log_level, :log_output, :interval, :write_headers, :oldest
     
     def initialize(argv)
       @env = 'development'
       @log_level = Logger::DEBUG
       @log_output = STDOUT
       @interval = 60
+      @oldest = 86400
       @write_headers = false
       parse(argv)
     end
@@ -18,6 +19,11 @@ module Mouse
     private
     def parse(argv)
       OptionParser.new do |opts|
+        
+        opts.on("-d", "--debug", "Logs in verbose mode (this is default when running in development environment)") do
+          @log_level = Logger::DEBUG
+        end
+        
         opts.on("-e [env]", "--environment [evn]", ['development', 'test', 'production'], "Rails environment development|test|production (default = development)") do |env|
           @env = env unless env.nil?
           case env
@@ -27,11 +33,11 @@ module Mouse
           end
         end
         
-        opts.on("-d", "--debug", "Logs in verbose mode (this is default when running in development environment)") do
-          @log_level = Logger::DEBUG
+        opts.on("-i [seconds]", "--interval [seconds]", "The interval to crawl at, in seconds (default is 10 seconds)") do |seconds|
+          @interval = seconds.to_i unless seconds.nil?
         end
         
-        opts.on("-i [seconds]", "--interval [seconds]", "The interval to crawl at, in seconds (default is 10 seconds)") do |seconds|
+        opts.on("-o [seconds]", "--oldest [seconds]", "Responses older than this are purged from the database (default is 86400 seconds [1 day])") do |seconds|
           @interval = seconds.to_i unless seconds.nil?
         end
         
