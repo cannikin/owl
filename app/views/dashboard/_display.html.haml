@@ -1,3 +1,13 @@
 #sites
   - local_assigns[:locals][:sites].each do |site|
     = render :partial => 'sites/site', :locals => { :site => site, :mode => local_assigns[:locals][:mode] }
+
+:javascript
+  new Ajax.PeriodicalUpdater('','#{watches_path(:format => 'json')}',
+                            { asynchronous:true,
+                              method:'get',
+                              frequency:60,
+                              onSuccess:function(request) {
+                                watchBlock.update(request.responseText.evalJSON().watch);
+                              }
+                            });

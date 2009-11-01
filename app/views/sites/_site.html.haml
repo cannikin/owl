@@ -4,14 +4,3 @@
     %div[watch]{:class => watch.status.css}
       = render :partial => 'watches/watch', :locals => { :watch => watch, :mode => mode }
   %h3.new_watch= link_to '+ Add URL', new_watch_path(:site_id => site.id)
-
-- site.watches.each do |watch| 
-  :javascript
-    new Ajax.PeriodicalUpdater('','#{watch_url(watch, :format => 'json')}',
-                              { asynchronous:true,
-                                method:'get',
-                                frequency:60,
-                                onSuccess:function(request) {
-                                  watchBlock.update(request.responseText.evalJSON().watch);
-                                }
-                              });

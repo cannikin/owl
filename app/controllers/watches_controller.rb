@@ -14,6 +14,8 @@ class WatchesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @watches }
+      format.json { render :json => @watches.to_json( :except => [:created_at, :updated_at, :status_id, :content_match, :active], 
+                                                      :include => { :status => { :except => [:id] } } ) }
     end
   end
 
