@@ -30,6 +30,12 @@ h1 {
 #sites .site .watch div.name span.name {
   font-size: 131% !important;
 }
+#sites .site .watch div.name span.full_url {
+  display: none;
+}
+#sites .site .watch div.name span.url a {
+  font-size: 85%;
+}
 #sites .site .watch div.status {
   display: none;
   width: auto;

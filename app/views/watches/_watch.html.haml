@@ -6,12 +6,8 @@
 .name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
   %span.site_name= watch.site.name
   %span.name= watch.name
+  %span.full_url= watch.url
   %span.url= link_to(watch.url, watch.url)
-  -#
-    - if params[:action] == 'slides' && watch.url.length > 25
-      %span.url= link_to(watch.url[0..15] + '...' + watch.url[-10..-1], watch.url)
-    - else
-      %span.url= link_to(watch.url, watch.url)
 
 - if mode == :extended
   .graph

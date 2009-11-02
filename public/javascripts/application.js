@@ -13,11 +13,26 @@ function resizePanels() {
     i--;
   } while (watch_width < watch_max_width)
 
+  // figure out how much text can fit for the URL
+  var total_chars = Math.floor(watch_width / 7);  // maximum length for URL based on this size of a box
+  
   // resize each slide
   watches.each(function(element) {
     element.setStyle({'width':watch_width+'px'});
+    resizeLink(element,watch_width,total_chars);
   });
   
+}
+
+function resizeLink(element, width, total) {
+  var url = element.down('span.full_url').innerHTML.replace(/https?:\/\//,'');
+  var a = element.down('span.url a')
+  if (a.innerHTML.length > total) {
+    var text = url.slice(0,(total/2)) + '...' + url.slice(-(total/2));      // shorten the URL if it's too long, removing http:// at the beginning
+    a.update(text);
+  } else {
+    a.update(url);       // otherwise replace with the full URL
+  }
 }
 
 function figureWatchWidth(browser_width,total,watch_margin,container_margin) {
