@@ -5,6 +5,7 @@
   
 .name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
   %span.site_name= watch.site.name
+  %span.full_name= watch.name
   %span.name= watch.name
   %span.full_url= watch.url
   %span.url= link_to(watch.url, watch.url)
@@ -17,9 +18,17 @@
     = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :class => 'graph', :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")
 
 .status
-  %span.status
-    = warning ? 'Warning' : watch.status.name
-  - unless watch.status.id == Status::DISABLED
-    %span.response= watch.last_response_time.to_s + " ms"
-  - else
-    %span.enable= link_to_remote 'Enable?', :url => { :controller => 'watches', :action => 'update', :id => watch.id }, :success => "$('watch_#{watch.id}').down('span.status').update('Enabled'); $('watch_#{watch.id}').down('span.enable').update('').addClassName('response').removeClassName('enable');", :method => :put, :with => "'watch[active]=1'"
+  %span.response_title Last
+  %span.response= watch.last_response_time.to_s + " ms"
+  %span.since_title For
+  %span.since= time_ago_in_words(watch.last_status_change_at || watch.created_at)
+
+
+-#
+  .status
+    %span.status
+      = warning ? 'Warning' : watch.status.name
+    - unless watch.status.id == Status::DISABLED
+      %span.response= watch.last_response_time.to_s + " ms"
+    - else
+      %span.enable= link_to_remote 'Enable?', :url => { :controller => 'watches', :action => 'update', :id => watch.id }, :success => "$('watch_#{watch.id}').down('span.status').update('Enabled'); $('watch_#{watch.id}').down('span.enable').update('').addClassName('response').removeClassName('enable');", :method => :put, :with => "'watch[active]=1'"

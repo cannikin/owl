@@ -31,7 +31,7 @@ h1
         color: #ffffff
         text-decoration: none
         
-    div.watch
+    .watch
       cursor: pointer
       margin: 0 0 .3em
       background-color: transparent
@@ -45,9 +45,13 @@ h1
         span
           display: block
         &.name
+          span.full_name
+            display: none
           span.name
             font-size: 167%
             text-shadow: 1px 1px 2px rgba(0,0,0,.6)
+          span.full_url
+            display: none
           span.url
             font-size: 100%
           a

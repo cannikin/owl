@@ -62,7 +62,7 @@ class WatchesController < ApplicationController
     respond_to do |format|
       if @watch.save
         flash[:notice] = 'Watch was successfully created.'
-        format.html { redirect_to(@watch) }
+        format.html { redirect_to root_path }
         format.xml  { render :xml => @watch, :status => :created, :location => @watch }
       else
         format.html { render :action => "new" }
@@ -79,7 +79,7 @@ class WatchesController < ApplicationController
     respond_to do |format|
       if @watch.update_attributes(params[:watch])
         flash[:notice] = 'Watch was successfully updated.'
-        format.html { redirect_to sites_path }
+        format.html { redirect_to root_path }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

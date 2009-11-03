@@ -1,44 +1,76 @@
 // Called when the browser is resized to resize each of the slides in the compact dashboard view
 function resizePanels() {
   var watches = $$('.watch');
-  var container_margin = $('sites').getStyle('marginLeft').match(/\d+/);  // how much space we need to reserve for the margins
+  var container_margin = $('sites').getStyle('marginLeft').match(/\d+/);  // how much space we need to reserve for the margins of the page
   var browser_width = parseInt(document.viewport.getWidth());             // browser width
-  var watch_margin = parseInt(watches.first().getStyle('marginRight').match(/\d+/));
-  var watch_max_width = parseInt(watches.first().getStyle('minWidth').match(/\d+/));
+  var watch_margin = parseInt(watches.first().getStyle('marginRight').match(/\d+/));  // how much margin for each watch
+  var watch_min_width = parseInt(watches.first().getStyle('minWidth').match(/\d+/));  // the minimum width a watch is allowed to be
   var i = watches.length;
   
   // start counting backwards through the number of total watches until we find a width for each that is greater than the max width
   do {
     var watch_width = figureWatchWidth(browser_width, i, watch_margin, container_margin);  // how wide one slide should be
     i--;
-  } while (watch_width < watch_max_width)
+  } while (watch_width < watch_min_width)
 
-  // figure out how much text can fit for the URL
-  var total_chars = Math.floor(watch_width / 7);  // maximum length for URL based on this size of a box
-  
   // resize each slide
   watches.each(function(element) {
     element.setStyle({'width':watch_width+'px'});
-    resizeLink(element,watch_width,total_chars);
+    resizeLink(element, watch_width);
+    resizeName(element, watch_width);
   });
   
 }
 
-function resizeLink(element, width, total) {
+// resizes the link in a watch so it doesn't wrap
+function resizeLink(element, width) {
   var url = element.down('span.full_url').innerHTML.replace(/https?:\/\//,'');
-  var a = element.down('span.url a')
-  if (a.innerHTML.length > total) {
-    var text = url.slice(0,(total/2)) + '...' + url.slice(-(total/2));      // shorten the URL if it's too long, removing http:// at the beginning
-    a.update(text);
+  var a = element.down('span.url a');
+  var font_size = a.getStyle('fontSize').replace(/px/,'');
+  a.update(resizeText(url, font_size, width, 1.7, 'middle'));
+}
+
+
+function resizeName(element, width) {
+  var full_name = element.down('span.full_name').innerHTML;
+  var name = element.down('span.name');
+  var font_size = name.getStyle('fontSize').replace(/px/,'');
+  name.update(resizeText(full_name, font_size, width, 1.4, 'end'));
+}
+
+
+// resizes text based on a certain element size
+// text => the text to resize
+// font_size  => the size of the current font
+// width => how wide of a space the font needs to fit
+// font_factor => multiplier that compensates for font width (something like 1.5)
+// shorten_at => where to shorten the text (and replace with ellipsis) - start, middle, end
+function resizeText(text, font_size, width, font_factor, shorten_at) {
+  var chars = width / font_size * font_factor;
+  if (text.length > chars) {
+    switch (shorten_at) {
+    case 'start':
+      return '...' + text.slice(-1,-chars);
+      break;
+    case 'middle':
+      return text.slice(0,(chars/2)) + '...' + text.slice(-(chars/2));      // shorten the URL if it's too long, removing http:// at the beginning
+      break;
+    case 'end':
+      return text.slice(0,chars) + '...';
+      break;
+    }
   } else {
-    a.update(url);       // otherwise replace with the full URL
+    return text
   }
 }
 
+
+// computes how wide one slide should be
 function figureWatchWidth(browser_width,total,watch_margin,container_margin) {
   return (browser_width / total - watch_margin) - (container_margin /total);  // how wide one slide should be
 }
 
+// reads cookies
 function getCookie(c_name) {
   if (document.cookie.length>0) {
     c_start=document.cookie.indexOf(c_name + "=");
@@ -52,6 +84,7 @@ function getCookie(c_name) {
   return "";
 }
 
+// methods used by watches
 watchBlock = {
   
   // set graphs to cookie settings
