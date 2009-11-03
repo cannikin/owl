@@ -39,7 +39,7 @@ function resizeName(element, width) {
 }
 
 
-// resizes text based on a certain element size
+// Resizes a block of text based on a certain element size
 // text => the text to resize
 // font_size  => the size of the current font
 // width => how wide of a space the font needs to fit
