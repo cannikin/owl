@@ -145,22 +145,28 @@ watchBlock = {
     // it was _slower_ than the average by 25%. 110 would be 10% faster than the average
     var new_color = this.calculateColor(data.from_average);
     
-    console.info('watch_id:',data.id,' css:',data.status.css);
-    
+    ['up','down','disabled','unknown'].each(function(class_name) {
+      obj.removeClassName(class_name);
+    });
+    obj.addClassName(data.status.css);
+  
+    // figure out what color to morph this thing to
     switch (data.status.css) {
     case 'up':
       var new_color = this.calculateColor(data.from_average);
       break;
     case 'down':
-      var new_color = '921C1C';
+      var new_color = new Color('921C1C');
       break;
     case 'disabled':
-      var new_color = 'aaaaaa';
+      var new_color = new Color('aaaaaa');
       break;
     case 'unknown':
-      var new_color = '666666';
+      var new_color = new Color('666666');
       break;
     }
+    
+    console.info('watch_id:',data.id,' css:',data.status.css,' color:',new_color.hex_color);
     
     obj.morph('background-color: #'+new_color.hex_color);
   }, 

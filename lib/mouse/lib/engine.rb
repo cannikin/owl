@@ -11,25 +11,32 @@ module Mouse
     
     # For each meme, get each lookup and initialize the requisite file in /lib/crawlers (all included in Cralwer::Base below)
     def go
+      threads = []
+      responses = []
+      
       watches = Watch.active
       watches.each do |watch|
-        Mouse.logger.debug("  - Checking watch #{watch.id}: #{watch.url}...")
-        begin
-          time = Time.now
-          http = HTTPClient.get(watch.url)
-          time = ((Time.now - time) * 1000).to_i
-          up(watch, http, time)
-        rescue SocketError => e
-          # URL is invalid
-          down(watch, 'URL is invalid')
-        rescue HTTPClient::ReceiveTimeoutError => e
-          # Apparently the uncatchable error
-          down(watch, 'ReceiveTimeoutError')
-        rescue HTTPClient::ConnectTimeoutError => e
-          # Site isn't responding
-          down(watch, 'Site not responding (timeout)')
-        end
+        #threads << Thread.new do
+          Mouse.logger.debug("  - Checking watch #{watch.id}: #{watch.url}...")
+          begin
+            time = Time.now
+            http = HTTPClient.get(watch.url)
+            time = ((Time.now - time) * 1000).to_i
+            up(watch, http, time)
+          rescue SocketError => e
+            # URL is invalid
+            down(watch, 'URL is invalid')
+          rescue HTTPClient::ReceiveTimeoutError => e
+            # Apparently the uncatchable error
+            down(watch, 'ReceiveTimeoutError')
+          rescue HTTPClient::ConnectTimeoutError => e
+            # Site isn't responding
+            down(watch, 'Site not responding (timeout)')
+          end
+        #end
       end
+      
+      #threads.each { |t| t.join }
       cleanup   # removes responses older than a day
     end
     
