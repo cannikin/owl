@@ -87,6 +87,10 @@ function getCookie(c_name) {
 // methods used by watches
 watchBlock = {
   
+  server_range:$R(50,120),
+  colors:{ fast:new Color('2c8428'),
+           slow:new Color('eebd4e') },
+  
   // set graphs to cookie settings
   setGraphsFromCookie:function() {
     cookies = []
@@ -112,42 +116,81 @@ watchBlock = {
   },
   
   // updates a watch with new data from the server
-  update:function(watch) {
-    var container = $('watch_'+watch.id);
-    container.down('span.status').update(watch.status.name);
-    if (container.down('span.enable')) {
-      container.down('span.enable').removeClassName('enable').addClassName('response');
+  update:function(watches) {
+    watches.each(function(w) {
+      var watch = w.watch
+      var container = $('watch_'+watch.id);
+      this.updateWatch(container, watch);
+    }.bind(this));
+  },
+  
+  
+  // update the contents of watch
+  updateWatch:function(obj,data) {
+
+    // update text labels and times
+    if (obj.down('span.enable')) {
+      obj.down('span.enable').removeClassName('enable').addClassName('response');
     }
-    container.down('span.response').update(watch.last_response_time + ' ms');
-    if (container.down('img.graph')) {
-      container.down('img.graph').src = '/watches/response_graph/'+watch.id+'?'+Date.now();
+    if (obj.down('span.response')) {
+      obj.down('span.response').update(data.last_response_time + ' ms');
     }
-    
-    // if the container doesn't already contain this class name, we need to change it
-    if (!container.hasClassName(watch.status.css)) {
-      
-      // remove existing class names
-      ['up','down','disabled','warning','unknown'].each(function(class_name) {
-        container.removeClassName(class_name);
-      });
-    
-      // add current style back in
-      container.addClassName(watch.status.css);
-    
-      // fade the color
-      if (watch.status.css == 'warning') {
-        container.morph('background-color: #EEBD4E');
-      } else if (watch.status.css == 'up') {
-        container.morph('background-color: #638562');
-      } else if (watch.status.css == 'down') {
-        container.morph('background-color: #921C1C');
-      } else if (watch.status.css == 'disabled') {
-        container.morph('background-color: #aaaaaa');
-      } else if (watch.status.css == 'unknown') {
-        container.morph('background-color: #666666');
-      }
+    if (obj.down('img.graph')) {
+      obj.down('img.graph').src = '/watches/response_graph/'+data.id+'?'+Date.now();
     }
 
+
+    // change color based on watch.from_average value. from_average represents a percentage of the average response
+    // time for the last hour. So if from_average is 75, that means that ping was 75% of the speed of the average, so
+    // it was _slower_ than the average by 25%. 110 would be 10% faster than the average
+    var new_color = this.calculateColor(data.from_average);
+    
+    switch (data.status.css) {
+    case 'up':
+      var new_color = this.calculateColor(data.from_average);
+      break;
+    case 'down':
+      var new_color = '921C1C';
+      break;
+    case 'disabled':
+      var new_color = 'aaaaaa';
+      break;
+    case 'unknown':
+      var new_color = '666666';
+      break;
+    }
+    
+    obj.morph('background-color: #'+new_color.hex_color);
+  }, 
+  
+  // converts from the server's range to a 0 - 100 scale
+  convertRange:function(percent) {
+    // anything outside the nominal server range is clipped to the min or max
+    if (percent < this.server_range.start) {
+      percent = this.server_range.start;
+    } else if (percent > this.server_range.end) {
+      percent = this.server_range.end;
+    }
+    var out = Math.floor(100 - (((percent - this.server_range.end) / (this.server_range.start - this.server_range.end)) * (100 - 0) + 0))
+    //console.info('100 - (((%i - %i) / (%i - %i)) * (100 - 1) + 1) = %i', percent, this.server_range.end, this.server_range.start, this.server_range.end, out)
+    return out
+  },
+
+  // calculates a color a point between color.fast and color.slow depending on the value of watch.from_average (higher number is faster)
+  calculateColor:function(num) {
+    var percent = this.convertRange(num);
+    var new_r = this.colors.slow.r + Math.floor((this.colors.fast.r - this.colors.slow.r) * (percent / 100));
+    var new_g = this.colors.slow.g + Math.floor((this.colors.fast.g - this.colors.slow.g) * (percent / 100));
+    var new_b = this.colors.slow.b + Math.floor((this.colors.fast.b - this.colors.slow.b) * (percent / 100));
+    var new_hex_color = parseInt(new_r).toString(16) + parseInt(new_g).toString(16) + parseInt(new_b).toString(16);
+    return new Color(new_hex_color);
   }
   
+}
+
+function Color(hex_color) {
+  this.r = parseInt(hex_color.slice(0,2),16);
+  this.g = parseInt(hex_color.slice(2,4),16);
+  this.b = parseInt(hex_color.slice(4,6),16);
+  this.hex_color = this.r.toString(16) + this.g.toString(16) + this.b.toString(16);
 }

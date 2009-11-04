@@ -55,6 +55,9 @@ h1 {
 #sites .site .watch div.status span.response {
   margin: 0 1.3em 0 0;
 }
+#sites .site .watch div.status span.since_date {
+  display: none;
+}
 #sites .site .watch div.graph {
   display: none;
 }

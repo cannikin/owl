@@ -6,8 +6,8 @@
   new Ajax.PeriodicalUpdater('','#{watches_path(:format => 'json')}',
                             { asynchronous:true,
                               method:'get',
-                              frequency:60,
+                              frequency:10,
                               onSuccess:function(request) {
-                                watchBlock.update(request.responseText.evalJSON().watch);
+                                watchBlock.update(request.responseText.evalJSON());
                               }
                             });

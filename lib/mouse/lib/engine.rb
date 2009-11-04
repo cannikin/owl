@@ -57,7 +57,7 @@ module Mouse
     
       # called when a site is considered down
       def down(watch, message='')
-        update_watch(watch, time, Status::DOWN)
+        update_watch(watch, 0, Status::DOWN)
         response = add_response(watch, 0, 0, 'error')
         #watch.responses.create(:time => 0, :status => 0, :reason => 'error')
         Mouse.logger.error("  ** #{message}")

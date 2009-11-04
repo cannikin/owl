@@ -14,7 +14,8 @@ class WatchesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @watches }
-      format.json { render :json => @watches.to_json( :except => [:created_at, :updated_at, :status_id, :content_match, :active], 
+      format.json { render :json => @watches.to_json( :methods => :from_average,
+                                                      :except => [:created_at, :updated_at, :status_id, :content_match, :active], 
                                                       :include => { :status => { :except => [:id] } } ) }
     end
   end
@@ -62,7 +63,7 @@ class WatchesController < ApplicationController
     respond_to do |format|
       if @watch.save
         flash[:notice] = 'Watch was successfully created.'
-        format.html { redirect_to root_path }
+        format.html { redirect_to new_watch_path }
         format.xml  { render :xml => @watch, :status => :created, :location => @watch }
       else
         format.html { render :action => "new" }

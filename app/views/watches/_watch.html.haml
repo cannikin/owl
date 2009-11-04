@@ -18,10 +18,11 @@
     = image_tag(response_graph_watches_path + "/#{watch.id}", :alt => "Last 24 hours response times for #{watch.name}", :class => 'graph', :id => "watch_#{watch.id}_graph", :title => "Response times, last 24 hours")
 
 .status
-  %span.response_title Last
+  %span.response_title Last:
   %span.response= watch.last_response_time.to_s + " ms"
-  %span.since_title For
-  %span.since= time_ago_in_words(watch.last_status_change_at || watch.created_at)
+  %span.since_title For:
+  %span.since_text= time_ago_in_words(watch.last_status_change_at || watch.created_at)
+  %span.since_date= watch.last_status_change_at || watch.created_at
 
 
 -#
