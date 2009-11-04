@@ -33,7 +33,7 @@ class WatchesController < ApplicationController
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @watch.to_json(:include => :status) }
-        format.json { render :json => @watch.to_json(:include => :status) }
+        format.json { render :json => @watch.to_json(:include => :status, :methods => :from_average) }
       end
     end
   end
