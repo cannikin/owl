@@ -145,6 +145,8 @@ watchBlock = {
     // it was _slower_ than the average by 25%. 110 would be 10% faster than the average
     var new_color = this.calculateColor(data.from_average);
     
+    console.info('watch_id:',data.id,' css:',data.status.css);
+    
     switch (data.status.css) {
     case 'up':
       var new_color = this.calculateColor(data.from_average);

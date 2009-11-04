@@ -73,7 +73,7 @@ module Mouse
       # updates the watch record
       def update_watch(watch, time, status)
         watch.status_id = status
-        watch.last_status_change_at = Time.now.to_s(:db) if watch.changed?  # only updates the last status change
+        watch.last_status_change_at = Time.zone.now.to_s(:db) if watch.changed?  # only updates the last status change
         watch.last_response_time = time
         return watch.save
       end

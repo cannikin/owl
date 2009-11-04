@@ -17,7 +17,7 @@ class Watch < ActiveRecord::Base
     # puts interval
     average = Response.average(:time, :conditions => ['watch_id = ? and time != 0 and created_at < ? and created_at > ?', self.id, Time.zone.now.to_s(:db), (Time.zone.now-interval).to_s(:db)]).to_i
     logger.debug("  *** average: #{average}, last_response_time: #{self.last_response_time}")
-    return average == 0 ? nil : (average.to_f / self.last_response_time.to_f * 100.0).to_i
+    return (average == 0 || last_response_time == 0) ? nil : (average.to_f / self.last_response_time.to_f * 100.0).to_i
   end
   
   private
