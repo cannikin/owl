@@ -9,12 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091028171657) do
+ActiveRecord::Schema.define(:version => 20091104233239) do
 
   create_table "headers", :force => true do |t|
     t.string   "key"
     t.string   "value"
     t.integer  "response_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "response_codes", :force => true do |t|
+    t.integer  "code"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,9 +53,11 @@ ActiveRecord::Schema.define(:version => 20091028171657) do
     t.integer  "warning_time"
     t.boolean  "active",                :default => true
     t.string   "content_match"
+    t.integer  "expected_response",     :default => 200
     t.integer  "status_id",             :default => 1
     t.integer  "site_id"
     t.datetime "last_status_change_at"
+    t.string   "status_reason"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

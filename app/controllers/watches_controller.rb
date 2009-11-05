@@ -14,8 +14,8 @@ class WatchesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @watches }
-      format.json { render :json => @watches.to_json( :methods => :from_average,
-                                                      :except => [:created_at, :updated_at, :status_id, :content_match, :active], 
+      format.json { render :json => @watches.to_json( :methods => [:from_average, :since],
+                                                      :except => [:created_at, :updated_at, :last_status_change_at, :status_id, :content_match, :active], 
                                                       :include => { :status => { :except => [:id] } } ) }
     end
   end
@@ -80,7 +80,7 @@ class WatchesController < ApplicationController
     respond_to do |format|
       if @watch.update_attributes(params[:watch])
         flash[:notice] = 'Watch was successfully updated.'
-        format.html { redirect_to root_path }
+        format.html { redirect_to :controller => 'dashboard', :action => 'compact' }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

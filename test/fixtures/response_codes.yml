@@ -1,0 +1,57 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  code: 200
+  name: OK
+
+two:
+  id: 2
+  code: 301
+  name: Moved Permanently
+  
+three:
+  id: 3
+  code: 302
+  name: Found (Moved Temporarily)
+
+four:
+  id: 4
+  code: 307
+  name: Moved Temporarily
+  
+five:
+  id: 5
+  code: 400
+  name: Bad Request
+  
+six:
+  id: 6
+  code: 401
+  name: Unauthorized
+  
+seven:
+  id: 7
+  code: 403
+  name: Forbidden
+  
+eight:
+  id: 8
+  code: 404
+  name: Not Found
+  
+nine:
+  id: 9
+  code: 500
+  name: Internal Server Error
+  
+ten:
+  id: 10
+  code: 502
+  name: Bad Gateway
+  
+eleven:
+  id: 11
+  code: 503
+  name: Service Unavailable
+  

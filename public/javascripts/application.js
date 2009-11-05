@@ -3,7 +3,7 @@ function resizePanels() {
   var watches = $$('.watch');
   var container_margin = $('sites').getStyle('marginLeft').match(/\d+/);  // how much space we need to reserve for the margins of the page
   var browser_width = parseInt(document.viewport.getWidth());             // browser width
-  var watch_margin = parseInt(watches.first().getStyle('marginRight').match(/\d+/));  // how much margin for each watch
+  var watch_margin = parseInt(watches.first().up().getStyle('marginRight').match(/\d+/));  // how much margin for each watch
   var watch_min_width = parseInt(watches.first().getStyle('minWidth').match(/\d+/));  // the minimum width a watch is allowed to be
   var i = watches.length;
   
@@ -15,7 +15,8 @@ function resizePanels() {
 
   // resize each slide
   watches.each(function(element) {
-    element.setStyle({'width':watch_width+'px'});
+    //element.setStyle({'width':watch_width+'px'});
+    element.up().setStyle({'width':watch_width+'px'});
     resizeLink(element, watch_width);
     resizeName(element, watch_width);
   });
@@ -129,6 +130,15 @@ watchBlock = {
   updateWatch:function(obj,data) {
 
     // update text labels and times
+    obj.down('span.full_name').update(data.name);
+    obj.down('span.full_url').update(data.url);
+    
+    obj.down('span.since_date').update(data.since);
+    obj.down('span.since_title').update(data.status.name+' for ');
+    obj.down('span.since_text').update(DateHelper.time_ago_in_words_with_parsing(data.since));
+    
+    obj.title = data.status_reason
+    
     if (obj.down('span.enable')) {
       obj.down('span.enable').removeClassName('enable').addClassName('response');
     }
@@ -139,7 +149,10 @@ watchBlock = {
       obj.down('img.graph').src = '/watches/response_graph/'+data.id+'?'+Date.now();
     }
 
-
+    // call resize panels so if the name or URL is too long, it'll get resized right now
+    resizeLink(obj,obj.getWidth());
+    resizeName(obj,obj.getWidth());
+    
     // change color based on watch.from_average value. from_average represents a percentage of the average response
     // time for the last hour. So if from_average is 75, that means that ping was 75% of the speed of the average, so
     // it was _slower_ than the average by 25%. 110 would be 10% faster than the average
@@ -165,10 +178,13 @@ watchBlock = {
       var new_color = new Color('666666');
       break;
     }
-    
-    console.info('watch_id:',data.id,' css:',data.status.css,' color:',new_color.hex_color);
-    
+
     obj.morph('background-color: #'+new_color.hex_color);
+    
+    // pulsate the watch if its response time is greater than the preset limit
+    if (data.warning_time && data.last_response_time > data.warning_time) {
+      new Effect.Pulsate(obj,{'delay':1});
+    }
   }, 
   
   // converts from the server's range to a 0 - 100 scale
@@ -202,3 +218,38 @@ function Color(hex_color) {
   this.b = parseInt(hex_color.slice(4,6),16);
   this.hex_color = this.r.toString(16) + this.g.toString(16) + this.b.toString(16);
 }
+
+// DateHelper from http://gist.github.com/58761 with a couple mods to display number of seconds
+// gets us nicely formatted time spans (ie: 3 minutes ago)
+
+var DateHelper = {
+  // Takes the format of "Thu Jul 23 17:44:00 PDT 2009" and converts it to a relative time
+  // Ruby strftime: %a %b %d %H:%M:%S %Z %Y
+  time_ago_in_words_with_parsing: function(from) {
+    var date = new Date;
+    date.setTime(Date.parse(from)); 
+    return this.time_ago_in_words(date);
+  },
+  
+  time_ago_in_words: function(from) {
+    return this.distance_of_time_in_words(new Date, from);
+  },
+
+  distance_of_time_in_words: function(to, from) {
+    var distance_in_seconds = ((to - from) / 1000).floor();
+    var distance_in_minutes = (distance_in_seconds / 60).floor();
+
+    if (distance_in_minutes == 0) { return distance_in_seconds + ' seconds'; }
+    if (distance_in_minutes == 1) { return 'a minute'; }
+    if (distance_in_minutes < 45) { return distance_in_minutes + ' minutes'; }
+    if (distance_in_minutes < 90) { return 'about 1 hour'; }
+    if (distance_in_minutes < 1440) { return 'about ' + (distance_in_minutes / 60).floor() + ' hours'; }
+    if (distance_in_minutes < 2880) { return '1 day'; }
+    if (distance_in_minutes < 43200) { return (distance_in_minutes / 1440).floor() + ' days'; }
+    if (distance_in_minutes < 86400) { return 'about 1 month'; }
+    if (distance_in_minutes < 525960) { return (distance_in_minutes / 43200).floor() + ' months'; }
+    if (distance_in_minutes < 1051199) { return 'about 1 year'; }
+
+    return 'over ' + (distance_in_minutes / 525960).floor() + ' years';
+  }
+};

@@ -14,11 +14,15 @@ h1 {
 #sites .site h2 {
   display: none;
 }
-#sites .site .watch {
+#sites .site .container {
+  overflow: hidden;
   float: left;
-  width: 300px;
-  height: 112px;
+  min-height: 1px;
   margin: 0 10px 10px 0;
+}
+#sites .site .watch {
+  width: auto;
+  height: 112px;
   display: block;
   min-width: 200px;
   -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
@@ -34,6 +38,9 @@ h1 {
 }
 #sites .site .watch div.name span.name {
   font-size: 131%;
+}
+#sites .site .watch div.name span.url {
+  white-space: nowrap;
 }
 #sites .site .watch div.name span.url a {
   font-size: 85%;
@@ -54,9 +61,6 @@ h1 {
 }
 #sites .site .watch div.status span.response {
   margin: 0 1.3em 0 0;
-}
-#sites .site .watch div.status span.since_date {
-  display: none;
 }
 #sites .site .watch div.graph {
   display: none;

@@ -1,6 +1,8 @@
 %div[site]
   %h2= link_to(site.name, site_path(site))
   - site.watches.each do |watch| 
-    %div[watch]{:class => watch.status.css}
-      = render :partial => 'watches/watch', :locals => { :watch => watch, :mode => mode }
+    -# to change the size of a watch, make sure the container fills the empty space then set .watch to position:absolute
+    .container
+      %div[watch]{:class => watch.status.css}
+        = render :partial => 'watches/watch', :locals => { :watch => watch, :mode => mode }
   %h3.new_watch= link_to '+ Add URL', new_watch_path(:site_id => site.id)

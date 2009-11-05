@@ -7,9 +7,11 @@ class CreateWatches < ActiveRecord::Migration
       t.integer :warning_time
       t.boolean :active, :default => true
       t.string :content_match
+      t.integer :expected_response, :default => 200
       t.integer :status_id, :default => Status::UP
       t.integer :site_id
       t.datetime :last_status_change_at
+      t.string :status_reason
       
       t.timestamps
     end

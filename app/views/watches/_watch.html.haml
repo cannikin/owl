@@ -1,8 +1,3 @@
-- if (watch.warning_time && watch.last_response_time > watch.warning_time)
-  - warning = true
-- else
-  - warning = false
-  
 .name{:onclick => "location.href = '#{edit_watch_path(watch)}'"}
   %span.site_name= watch.site.name
   %span.full_name= watch.name
@@ -20,16 +15,6 @@
 .status
   %span.response_title Last:
   %span.response= watch.last_response_time.to_s + " ms"
-  %span.since_title For:
+  %span.since_title= watch.status.name + " for "
   %span.since_text= time_ago_in_words(watch.last_status_change_at || watch.created_at)
   %span.since_date= watch.last_status_change_at || watch.created_at
-
-
--#
-  .status
-    %span.status
-      = warning ? 'Warning' : watch.status.name
-    - unless watch.status.id == Status::DISABLED
-      %span.response= watch.last_response_time.to_s + " ms"
-    - else
-      %span.enable= link_to_remote 'Enable?', :url => { :controller => 'watches', :action => 'update', :id => watch.id }, :success => "$('watch_#{watch.id}').down('span.status').update('Enabled'); $('watch_#{watch.id}').down('span.enable').update('').addClassName('response').removeClassName('enable');", :method => :put, :with => "'watch[active]=1'"

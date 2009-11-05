@@ -88,6 +88,9 @@ h1 a span {
 #sites .site .watch div.status span.response {
   font-size: 85%;
 }
+#sites .site .watch div.status span.since_date {
+  display: none;
+}
 #sites .site .watch div.status a {
   color: #ffffff;
 }
