@@ -31,3 +31,62 @@ sportsstudiocasting2:
   status_id: 1
   site_id: 2
   
+active1:
+  id: 4
+  name: Homepage
+  url: http://www.active.com/
+  active: true
+  warning_time: 3000
+  status_id: 1
+  site_id: 3
+  
+active2:
+  id: 5
+  name: Running Channel
+  url: http://www.active.com/running/
+  active: true
+  warning_time: 3000
+  status_id: 1
+  site_id: 3
+  
+eteamz1:
+  id: 6
+  name: Homepage
+  url: http://www.eteamz.com/
+  active: true
+  warning_time: 2000
+  status_id: 1
+  site_id: 4
+  
+eteamz2:
+  id: 7
+  name: Sites
+  url: http://www.eteamz.com/detroitdiesel/?nocache=1
+  warning_time: 3000
+  status_id: 1
+  site_id: 4
+  
+sportspower1:
+  id: 8
+  name: LAXPower
+  url: http://www.laxpower.com/
+  warning_time: 3000
+  status_id: 1
+  site_id: 5
+  
+sportspower2:
+  id: 9
+  name: SportsPower
+  url: http://www.sportspower.com/
+  warning_time: 3000
+  status_id: 1
+  site_id: 5
+  
+sportspower3:
+  id: 10
+  name: FootballPower
+  url: http://www.sportspower.com/football/
+  warning_time: 3000
+  status_id: 1
+  site_id: 5
+  

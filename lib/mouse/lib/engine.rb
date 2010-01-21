@@ -34,6 +34,8 @@ module Mouse
           down(watch, :message => 'ReceiveTimeoutError')
         rescue HTTPClient::ConnectTimeoutError => e       # Site isn't responding
           down(watch, :status_reason => 'Timed out waiting for response', :message => 'Site not responding (timeout)')
+        rescue Errno::ECONNRESET => e
+          down(watch, :status_reason => 'Connection reset by peer', :message => 'Connection reset by peer')
         end
       end
       
@@ -100,7 +102,7 @@ module Mouse
       # removes any responses older than a given time
       def cleanup
         Mouse.logger.debug("Purging records older than #{Mouse.options.oldest} seconds.")
-        Watch.destroy_all ['created_at < ?', (Time.now - Mouse.options.oldest).to_s(:db)]
+        Response.destroy_all ['created_at < ?', (Time.now - Mouse.options.oldest).to_s(:db)]
       end
       
   end
