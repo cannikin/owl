@@ -5,6 +5,9 @@ class CreateSites < ActiveRecord::Migration
 
       t.timestamps
     end
+    
+    add_index :sites, :id, :unique => true
+    
   end
 
   def self.down

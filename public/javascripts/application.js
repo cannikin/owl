@@ -121,7 +121,9 @@ watchBlock = {
     watches.each(function(w) {
       var watch = w.watch
       var container = $('watch_'+watch.id);
-      this.updateWatch(container, watch);
+      if (container) { 
+        this.updateWatch(container, watch);
+      }
     }.bind(this));
   },
   

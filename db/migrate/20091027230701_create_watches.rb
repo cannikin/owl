@@ -15,6 +15,10 @@ class CreateWatches < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    add_index :watches, :id, :unique => true
+    add_index :watches, :site_id
+
   end
 
   def self.down

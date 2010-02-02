@@ -8,6 +8,10 @@ class CreateResponses < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    add_index :responses, :id, :unique => true
+    add_index :responses, :watch_id
+    
   end
 
   def self.down
